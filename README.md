@@ -25,8 +25,8 @@ Before running this project, make sure you have installed:
 - Create a `.env` file in the root of the project.
 - Add the following environment variables:
 
-`PORT=3000 # Port on which the server will run`
-`MONGODB_URI=mongodb://localhost:27017/personal-finance-manager # MongoDB URI`
+`PORT=3000 # Port on which the server will run 
+MONGODB_URI=mongodb://localhost:27017/personal-finance-manager # MongoDB URI`
 
 - NOTE: The MongoDB URI should be replaced with your own MongoDB database URI.
 
