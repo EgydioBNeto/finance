@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 // Load environment variables
 dotenv.config();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 // Function that starts the server
 const startServer = async () => {
