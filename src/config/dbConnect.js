@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 dotenv.config();
 
 // Get the MongoDB connection string based on the environment
-const connectionString = process.env.MONGODB_URI;
+const connectionString = process.env.FINANCE_MONGODB_URI;
 
 // Connect to the MongoDB database
 mongoose.connect(connectionString, {

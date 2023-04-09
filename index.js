@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 // Load environment variables
 dotenv.config();
 
-const port = process.env.PORT;
+const port = process.env.FINANCE_API_PORT;
 
 // Function that starts the server
 const startServer = async () => {
