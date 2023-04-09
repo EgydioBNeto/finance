@@ -43,6 +43,9 @@ This personal finance manager has the following features:
 - Add expense and revenue transactions;
 - View the current balance, that is, the difference between expenses and revenue.
 
+## How to test
+- https://documenter.getpostman.com/view/15022959/2s93XsYSGF
+
 ## Technologies used
 
 - Node.js
