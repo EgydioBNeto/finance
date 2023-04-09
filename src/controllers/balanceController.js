@@ -6,31 +6,31 @@ class balanceController {
     const { description, value, category } = req.body;
     const newGain = new gain({ description, value, category });
     await newGain.save();
-    res.send(newGain);
+    res.status(201).json(newGain);
   }
 
   static async addDebits(req, res) {
     const { description, value, category } = req.body;
     const newDebit = new debit({ description, value, category });
     await newDebit.save();
-    res.send(newDebit);
+    res.status(201).json(newDebit);
   }
 
   static async getBalance(req, res) {
     const totalDebits = await debit.find();
     const totalGains = await gain.find();
     const balance = totalGains - totalDebits;
-    res.send(balance);
+    res.status(200).json(balance);
   }
 
   static async getGains(req, res) {
     const totalGains = await gain.find();
-    res.send(totalGains);
+    res.status(200).json(totalGains);
   }
 
   static async getDebits(req, res) {
     const totalDebits = await debit.find();
-    res.send(totalDebits);
+    res.status(200).json(totalDebits);
   }
 }
 
