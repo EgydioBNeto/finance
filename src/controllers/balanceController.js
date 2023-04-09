@@ -2,35 +2,99 @@ import debit from "../models/Debit.js";
 import gain from "../models/Gain.js";
 
 class balanceController {
+  // Add a new gain
   static async addGains(req, res) {
-    const { description, value, category } = req.body;
-    const newGain = new gain({ description, value, category });
-    await newGain.save();
-    res.status(201).json(newGain);
+    try {
+      const { description, value, date } = req.body;
+
+      // Validate input
+      if (typeof value !== "number" || !description || !date) {
+        return res.status(400).json({ error: "Invalid input" });
+      }
+
+      const newGain = new gain({ description, value, date });
+      await newGain.save();
+
+      // Return the newly created gain with a 201 Created status code
+      res.status(201).json(newGain);
+    } catch (err) {
+      // Handle any errors with a 500 Internal Server Error status code
+      console.error(err);
+      res.status(500).json({ error: "Server error" });
+    }
   }
 
+  // Add a new debit
   static async addDebits(req, res) {
-    const { description, value, category } = req.body;
-    const newDebit = new debit({ description, value, category });
-    await newDebit.save();
-    res.status(201).json(newDebit);
+    try {
+      const { description, value, date } = req.body;
+
+      // Validate input
+      if (typeof value !== "number" || !description || !date) {
+        return res.status(400).json({ error: "Invalid input" });
+      }
+
+      const newDebit = new debit({ description, value, date });
+      await newDebit.save();
+
+      // Return the newly created debit with a 201 Created status code
+      res.status(201).json(newDebit);
+    } catch (err) {
+      // Handle any errors with a 500 Internal Server Error status code
+      console.error(err);
+      res.status(500).json({ error: "Server error" });
+    }
   }
 
+  // Get the current balance of the account
   static async getBalance(req, res) {
-    const totalDebits = await debit.find();
-    const totalGains = await gain.find();
-    const balance = totalGains - totalDebits;
-    res.status(200).json(balance);
+    try {
+      const [totalDebits, totalGains] = await Promise.all([
+        debit.aggregate([{ $group: { _id: null, total: { $sum: "$value" } } }]),
+        gain.aggregate([{ $group: { _id: null, total: { $sum: "$value" } } }]),
+      ]);
+
+      const balance = {
+        totalDebits: totalDebits[0]?.total || 0,
+        totalGains: totalGains[0]?.total || 0,
+        balance: (totalGains[0]?.total || 0) - (totalDebits[0]?.total || 0),
+      };
+
+      // Return the balance object with a 200 OK status code
+      res.status(200).json(balance);
+    } catch (err) {
+      // Handle any errors with a 500 Internal Server Error status code
+      console.error(err);
+      res.status(500).json({ error: "Server error" });
+    }
   }
 
+  // Get all registered gains
   static async getGains(req, res) {
-    const totalGains = await gain.find();
-    res.status(200).json(totalGains);
+    try {
+      const gains = await gain.find();
+
+      // Return the gains with a 200 OK status code
+      res.status(200).json(gains);
+    } catch (err) {
+      // Handle any errors with a 500 Internal Server Error status code
+      console.error(err);
+      res.status(500).json({ error: "Server error" });
+    }
   }
 
+  // Get all registered debits
   static async getDebits(req, res) {
-    const totalDebits = await debit.find();
-    res.status(200).json(totalDebits);
+    try {
+      const debits = await debit.find();
+
+      // Return the debits with a 200 OK status code
+      res.status(200).json(debits);
+    } catch (err) {
+      // Handle any errors with a 500 Internal Server Error status code
+      console.error(err);
+      res.status(500).json({ error: "Server error" });
+    }
   }
 }
 
