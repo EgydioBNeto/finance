@@ -26,6 +26,7 @@ Before running this project, make sure you have installed:
 - Add the following environment variables:
 
 `MONGODB_URI=mongodb://localhost:27017/personal-finance-manager # MongoDB URI`
+`PORT=3000`
 
 - NOTE: The MongoDB URI should be replaced with your own MongoDB database URI.
 
