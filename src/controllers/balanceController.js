@@ -1,68 +1,36 @@
 import debit from "../models/Debit.js";
-import gain from "../models/Gain";
+import gain from "../models/Gain.js";
 
 class balanceController {
-  addGain(req, res) {
-    const { value, date, description } = req.body;
-    const newGain = new gain({ value, date, description });
-    newGain.save();
-    res.status(201).send(newGain);
+  static async addGains(req, res) {
+    const { description, value, category } = req.body;
+    const newGain = new gain({ description, value, category });
+    await newGain.save();
+    res.send(newGain);
   }
 
-  addDebit(req, res) {
-    const { value, date, description } = req.body;
-    const newDebit = new debit({ value, date, description });
-    newDebit.save();
-    res.status(201).send(newDebit);
+  static async addDebits(req, res) {
+    const { description, value, category } = req.body;
+    const newDebit = new debit({ description, value, category });
+    await newDebit.save();
+    res.send(newDebit);
   }
 
-  getBalance(req, res) {
-    const balance = gain.value - debit.value;
-    res.status(200).send(balance);
+  static async getBalance(req, res) {
+    const totalDebits = await debit.find();
+    const totalGains = await gain.find();
+    const balance = totalGains - totalDebits;
+    res.send(balance);
   }
 
-  getGains(req, res) {
-    const gains = gain.find();
-    res.status(200).send(gains);
+  static async getGains(req, res) {
+    const totalGains = await gain.find();
+    res.send(totalGains);
   }
 
-  getDebits(req, res) {
-    const debits = debit.find();
-    res.status(200).send(debits);
-  }
-
-  deleteGain(req, res) {
-    const id = req.params.id;
-    const gainToDelete = gain.findByIdAndDelete(id);
-    res.status(200).send(gainToDelete);
-  }
-
-  deleteDebit(req, res) {
-    const id = req.params.id;
-    const debitToDelete = debit.findByIdAndDelete(id);
-    res.status(200).send(debitToDelete);
-  }
-
-  updateGain(req, res) {
-    const id = req.params.id;
-    const { value, date, description } = req.body;
-    const gainToUpdate = gain.findByIdAndUpdate(id, {
-      value,
-      date,
-      description,
-    });
-    res.status(200).send(gainToUpdate);
-  }
-
-  updateDebit(req, res) {
-    const id = req.params.id;
-    const { value, date, description } = req.body;
-    const debitToUpdate = debit.findByIdAndUpdate(id, {
-      value,
-      date,
-      description,
-    });
-    res.status(200).send(debitToUpdate);
+  static async getDebits(req, res) {
+    const totalDebits = await debit.find();
+    res.send(totalDebits);
   }
 }
 

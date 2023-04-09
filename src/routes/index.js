@@ -1,9 +1,11 @@
 import express from "express";
-import exampleRoutes from "./exampleRoutes.js";
+import balanceRoutes from "./balanceRoutes.js";
 
-const router = express.Router();
+const routes = (app) => {
+  app.route("/").get((req, res) => {
+    res.status(200).send({ message: "balance API" });
+  });
+  app.use(express.json(), balanceRoutes);
+};
 
-// Routes
-router.use("/", exampleRoutes);
-
-export default router;
+export default routes;
