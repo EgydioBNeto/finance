@@ -5,14 +5,9 @@ class balanceController {
   // Add a new gain
   static async addGains(req, res) {
     try {
-      const { description, value, date } = req.body;
+      const { value } = req.body;
 
-      // Validate input
-      if (typeof value !== "number" || !description || !date) {
-        return res.status(400).json({ error: "Invalid input" });
-      }
-
-      const newGain = new gain({ description, value, date });
+      const newGain = new gain({ value });
       await newGain.save();
 
       // Return the newly created gain with a 201 Created status code
@@ -27,14 +22,9 @@ class balanceController {
   // Add a new debit
   static async addDebits(req, res) {
     try {
-      const { description, value, date } = req.body;
-
-      // Validate input
-      if (typeof value !== "number" || !description || !date) {
-        return res.status(400).json({ error: "Invalid input" });
-      }
-
-      const newDebit = new debit({ description, value, date });
+      const { value } = req.body;
+      
+      const newDebit = new debit({ value });
       await newDebit.save();
 
       // Return the newly created debit with a 201 Created status code
