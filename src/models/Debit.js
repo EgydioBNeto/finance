@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const debitSchema = new mongoose.Schema({
   value: { type: Number, required: true },
-  // date: { type: Date, required: true },
-  // description: { type: String, required: true },
+  date: { type: Date },
+  description: { type: String },
 });
 
 const debit = mongoose.model("debit", debitSchema);

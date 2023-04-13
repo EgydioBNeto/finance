@@ -5,9 +5,9 @@ class balanceController {
   // Add a new gain
   static async addGains(req, res) {
     try {
-      const { value } = req.body;
+      const { value, description } = req.body;
 
-      const newGain = new gain({ value });
+      const newGain = new gain({ value, description, date: new Date() });
       await newGain.save();
 
       // Return the newly created gain with a 201 Created status code
@@ -22,9 +22,9 @@ class balanceController {
   // Add a new debit
   static async addDebits(req, res) {
     try {
-      const { value } = req.body;
+      const { value, description } = req.body;
       
-      const newDebit = new debit({ value });
+      const newDebit = new debit({ value, description, date: new Date() });
       await newDebit.save();
 
       // Return the newly created debit with a 201 Created status code
