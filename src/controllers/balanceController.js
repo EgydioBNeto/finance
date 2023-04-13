@@ -88,5 +88,4 @@ class balanceController {
   }
 }
 
-
 export default balanceController;
