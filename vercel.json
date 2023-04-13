@@ -1,11 +1,16 @@
 {
-  "name": "deploy-node-in-vercel",
   "version": 2,
-  "public": true,
-  "routes": [
+  "builds": [
     {
-      "src": "/(.*)",
-      "dest": "./index.js"
+      "src": "./index.js",
+      "use": "@now/node-server"
+    }
+  ],
+  "routes": [
+    { "handle": "filesystem" },
+    {
+      "src": "/.*",
+      "dest": "index.js"
     }
   ]
 }
