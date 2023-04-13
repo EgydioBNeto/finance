@@ -1,11 +1,6 @@
 import app from "./src/app.js";
 import dotenv from "dotenv";
 
-export default function handler(request, response) {
-  const { name } = request.query;
-  return response.end(`Hello ${name}!`);
-}
-
 // Load environment variables
 dotenv.config();
 
