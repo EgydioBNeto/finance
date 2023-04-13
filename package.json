@@ -32,10 +32,10 @@
     "mongoose": "^7.0.3",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22",
-    "yarn": "^1.22.19"
+    "yarn": "^1.22.19",
+    "@vercel/node": "^2.10.3"
   },
   "devDependencies": {
-    "@vercel/node": "^2.10.3",
     "@zeit/ncc": "^0.22.3"
   }
 }
