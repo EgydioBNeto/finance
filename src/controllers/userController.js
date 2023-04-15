@@ -1,4 +1,5 @@
 import user from "../models/User.js";
+import bcrypt from "bcrypt";
 
 class userController {
   static async getUsers(req, res) {
@@ -8,7 +9,11 @@ class userController {
 
   static async addUser(req, res) {
     const { login, password } = req.body;
-    const newUser = await user.create({ login, password });
+    const passwordHash = await bcrypt.hash(password, 10);
+    const newUser = await user.create({
+      login: login,
+      password: passwordHash,
+    });
     res.status(201).json(newUser);
   }
 
@@ -21,7 +26,7 @@ class userController {
       return res.status(401).json({ error: "User not found" });
     }
 
-    const passwordMatch = existingUser.password === password;
+    const passwordMatch = await bcrypt.compare(password, existingUser.password);
 
     if (!passwordMatch) {
       // incorrect password
