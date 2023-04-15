@@ -11,6 +11,26 @@ class userController {
     const newUser = await user.create({ login, password });
     res.status(201).json(newUser);
   }
+
+  static async login(req, res) {
+    const { login, password } = req.body;
+    const existingUser = await user.findOne({ login: login });
+
+    if (!existingUser) {
+      // user not found
+      return res.status(401).json({ error: "User not found" });
+    }
+
+    const passwordMatch = existingUser.password === password;
+
+    if (!passwordMatch) {
+      // incorrect password
+      return res.status(401).json({ error: "Incorrect password" });
+    }
+
+    // successful login
+    return res.status(200).json({ message: "Login successful" });
+  }
 }
 
 export default userController;
