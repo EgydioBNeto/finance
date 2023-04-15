@@ -7,7 +7,12 @@ class balanceController {
     try {
       const { value, description } = req.body;
 
-      const newGain = new gain({ value, description, date: new Date() });
+      const newGain = new gain({
+        value,
+        description,
+        date: new Date(),
+        type: "Gain",
+      });
       await newGain.save();
 
       // Return the newly created gain with a 201 Created status code
@@ -24,7 +29,7 @@ class balanceController {
     try {
       const { value, description } = req.body;
 
-      const newDebit = new debit({ value, description, date: new Date() });
+      const newDebit = new debit({ value, description, date: new Date(), type: "Debit" });
       await newDebit.save();
 
       // Return the newly created debit with a 201 Created status code
