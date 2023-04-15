@@ -23,7 +23,7 @@ class balanceController {
   static async addDebits(req, res) {
     try {
       const { value, description } = req.body;
-      
+
       const newDebit = new debit({ value, description, date: new Date() });
       await newDebit.save();
 
