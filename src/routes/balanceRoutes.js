@@ -1,5 +1,6 @@
 import express from "express";
 import balanceController from "../controllers/balanceController.js";
+import userController from "../controllers/userController.js";
 
 const router = express.Router();
 
@@ -8,6 +9,8 @@ router
   .get("/gain", balanceController.getGains)
   .get("/debit", balanceController.getDebits)
   .post("/gain", balanceController.addGains)
-  .post("/debit", balanceController.addDebits);
+  .post("/debit", balanceController.addDebits)
+  .get("/user", userController.getUsers)
+  .post("/user", userController.addUser);
 
 export default router;
