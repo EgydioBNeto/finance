@@ -1,5 +1,11 @@
 import user from "../models/User.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+const authConfig = { secret: process.env.FINANCE_JWT_SECRET };
+
+dotenv.config();
 
 class userController {
   static async getUsers(req, res) {
@@ -22,19 +28,20 @@ class userController {
     const existingUser = await user.findOne({ login: login });
 
     if (!existingUser) {
-      // user not found
       return res.status(401).json({ error: "User not found" });
     }
 
     const passwordMatch = await bcrypt.compare(password, existingUser.password);
 
     if (!passwordMatch) {
-      // incorrect password
       return res.status(401).json({ error: "Incorrect password" });
     }
 
-    // successful login
-    return res.status(200).json({ message: "Login successful" });
+    const tokenPayload = { id: existingUser._id, login: existingUser.login };
+
+    const token = jwt.sign(tokenPayload, authConfig.secret);
+
+    return res.status(200).json({ token });
   }
 }
 
