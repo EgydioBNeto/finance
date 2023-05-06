@@ -15,11 +15,27 @@ class userController {
 
   static async addUser(req, res) {
     const { login, password } = req.body;
+    const existingUser = await user.findOne({ login: login });
+
+    if (existingUser) {
+      return res.status(409).json({ error: "User already exists" });
+    }
+
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        error: "Invalid password. Please choose a stronger password.",
+      });
+    }
+
     const passwordHash = await bcrypt.hash(password, 10);
     const newUser = await user.create({
       login: login,
       password: passwordHash,
     });
+
     res.status(201).json(newUser);
   }
 
