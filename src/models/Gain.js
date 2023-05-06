@@ -5,6 +5,7 @@ const gainSchema = new mongoose.Schema({
   date: { type: Date },
   description: { type: String },
   type: { type: String },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
 });
 
 const gain = mongoose.model("gain", gainSchema);

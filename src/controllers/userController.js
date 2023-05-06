@@ -41,7 +41,7 @@ class userController {
 
     const token = jwt.sign(tokenPayload, authConfig.secret);
 
-    return res.status(200).json({ token });
+    return res.status(200).json({ token, user: existingUser._id });
   }
 }
 

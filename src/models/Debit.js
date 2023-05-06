@@ -5,6 +5,7 @@ const debitSchema = new mongoose.Schema({
   date: { type: Date },
   description: { type: String },
   type: { type: String },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
 });
 
 const debit = mongoose.model("debit", debitSchema);

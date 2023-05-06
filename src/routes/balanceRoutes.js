@@ -14,7 +14,7 @@ router
   .post("/gain", authConfigs, balanceController.addGains)
   .post("/debit", authConfigs, balanceController.addDebits)
   .get("/user", authConfigs, userController.getUsers)
-  .post("/user", authConfigs, userController.addUser)
+  .post("/user", userController.addUser)
   .get("/extract", authConfigs, extractController.getExtract);
 
 export default router;
