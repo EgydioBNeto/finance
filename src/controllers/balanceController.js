@@ -56,6 +56,49 @@ class balanceController {
     }
   }
 
+  static async deleteGains(req, res) {
+    try {
+      const { id } = req.query;
+      // Find the gain
+      const existingGain = await gain.findById(id);
+      if (!existingGain) {
+        return res.status(404).json({ error: "Gain not found" });
+      }
+
+      // Delete the gain
+      await gain.findByIdAndDelete(id);
+
+      // Return the deleted gain with a 200 OK status code
+      res.status(200).json(existingGain);
+    } catch (err) {
+      // Handle any errors with a 500 Internal Server Error status code
+      console.error(err);
+      res.status(500).json({ error: "Server error" });
+    }
+  }
+
+  static async deleteDebits(req, res) {
+    try {
+      const { id } = req.query;
+
+      // Find the debit
+      const existingDebit = await debit.findById(id);
+      if (!existingDebit) {
+        return res.status(404).json({ error: "Debit not found" });
+      }
+
+      // Delete the debit
+      await debit.findByIdAndDelete(id);
+
+      // Return the deleted debit with a 200 OK status code
+      res.status(200).json(existingDebit);
+    } catch (err) {
+      // Handle any errors with a 500 Internal Server Error status code
+      console.error(err);
+      res.status(500).json({ error: "Server error" });
+    }
+  }
+
   // Get all registered gains
   static async getGains(req, res) {
     try {

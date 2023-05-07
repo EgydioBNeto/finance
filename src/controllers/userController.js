@@ -39,6 +39,19 @@ class userController {
     res.status(201).json(newUser);
   }
 
+  static async deleteUser(req, res) {
+    const { id } = req.query;
+    const existingUser = await user.findById(id);
+
+    if (!existingUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    await user.findByIdAndDelete(id);
+
+    res.status(200).json({ message: "User deleted" });
+  }
+
   static async login(req, res) {
     const { login, password } = req.body;
     const existingUser = await user.findOne({ login: login });

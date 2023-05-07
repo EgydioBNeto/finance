@@ -13,8 +13,11 @@ router
   .get("/debit", authConfigs, balanceController.getDebits)
   .post("/gain", authConfigs, balanceController.addGains)
   .post("/debit", authConfigs, balanceController.addDebits)
+  .delete("/gain", authConfigs, balanceController.deleteGains)
+  .delete("/debit", authConfigs, balanceController.deleteDebits)
   .get("/user", authConfigs, userController.getUsers)
   .post("/user", userController.addUser)
-  .get("/extract", authConfigs, extractController.getExtract);
+  .get("/extract", authConfigs, extractController.getExtract)
+  .delete("/user", userController.deleteUser);
 
 export default router;
